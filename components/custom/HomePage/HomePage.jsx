@@ -13,7 +13,7 @@ const HomePage = () => {
     <div className='mt-10 flex flex-col items-center gap-8'>
         <h1 className='text-2xl font-semibold'>Welcome {user?.fullName}</h1>
         <div className='flex justify-center'>
-          <Link href={'./dashboard/create-new'}><Button className='cursor-pointer'>Click Here To Redesign Your Room</Button></Link>     
+          <Link href={'./dashboard/create-new'}><Button className='bg-[#9D722F] cursor-pointer'>Click Here To Redesign Your Room</Button></Link>     
         </div>
     
       {roomListing?.length == 0 ? 
