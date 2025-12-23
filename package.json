@@ -18,11 +18,13 @@
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
+    "firebase": "^12.7.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.0",
     "react": "19.2.3",
     "react-day-picker": "^9.13.0",
     "react-dom": "19.2.3",
+    "replicate": "^0.33.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
