@@ -9,7 +9,7 @@ const Header = () => {
     const {userDetail, setUserDetail} = useContext(UserDetailsContext)
     console.log(userDetail?.credits)
   return (
-    <div className='shadow-md flex items-center justify-between px-8'>
+    <div className='shadow-md flex items-center justify-between px-1 sm:px-8'>
         <div className='flex items-center gap-2'>
             <Image src='/Logo.png' alt='Logo' height={80} width={80} />
             <h2 className='font-semibold text-lg'>AI Interior Designer</h2>

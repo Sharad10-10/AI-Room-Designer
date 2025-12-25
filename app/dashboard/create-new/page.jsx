@@ -1,3 +1,4 @@
+
 import CreateNewForm from '../../../components/custom/CreateNewForm/CreateNewForm'
 import React from 'react'
 
@@ -11,6 +12,7 @@ const CreateNew = () => {
         </div>
 
       <CreateNewForm />
+      
 
 
     </div>

@@ -31,7 +31,7 @@ export const POST = async (req)=> {
             Focus on creating a cohesive, harmonious design that captures the essence of ${designType} style while making the space both beautiful and functional.`
         };
         
-        // const output = await replicate.run(process.env.REPLICATE_AI_MODEL, { input });
+        const output = await replicate.run(process.env.REPLICATE_AI_MODEL, { input });
 
         // const output = "https://replicate.delivery/xezq/Ouxry29sNA7KAtBwmiGeoD6lqWfaGaU8GbNLLWBe6zLeX0XXB/out.png"
         const base64Image = await convertImageToBase64(output)
@@ -40,8 +40,7 @@ export const POST = async (req)=> {
         await uploadString(storageRef, base64Image, 'data_url')
         .then(res=>{console.log("File uploaded successfully...")})
 
-        const downloadUrl = await getDownloadURL(storageRef)
-        
+        const downloadUrl = await getDownloadURL(storageRef);
 
         console.log(downloadUrl)
         const addImage = await db.insert(AiGeneratedImage).values({
@@ -50,26 +49,16 @@ export const POST = async (req)=> {
             aiImage: downloadUrl,
             originalImage: imageUrl,
             email
-
         }).returning()
+
         return NextResponse.json({
             success: true,
             message: "Data successfully added",
             downloadUrl,
             result: addImage[0]
-        })
-
-        
-
-        // return NextResponse.json({"result" : downloadUrl})
- 
-        // return NextResponse.json({
-        //     success: true,
-        //     message: "Output successfully generated",
-        //     output
-        // }, {status:200})
-        
+        },{status: 200})
    }
+
    catch(error) {
     return NextResponse.json({
         success: false,
@@ -80,7 +69,7 @@ export const POST = async (req)=> {
    
 }
 
-
+// Okay now lets convert ai generated image into base64. here we request image data to be arraybuffer. Basically, it is a raw binary data.
 const convertImageToBase64 = async(imageUrl)=> {
     const response = await fetch(imageUrl)
     const arrayBuffer = await response.arrayBuffer()

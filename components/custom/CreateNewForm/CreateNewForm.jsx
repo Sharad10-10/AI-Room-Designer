@@ -8,11 +8,18 @@ import { Button } from '../../ui/button'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { storage } from '../../../config/firebaseConfig'
 import { useUser } from '@clerk/nextjs'
+import CustomLoading from '../../../components/custom/CustomLoading/CustomLoading'
+import AiOutputDialog from '../AiOutputDialog/AiOutputDialog'
 
 
 const CreateNewForm = () => {
 
-    const [formData, setFormData] = useState()
+    const [formData, setFormData] = useState();
+    const [loading, setLoading] = useState(false);
+    const [outputData, setOutputData] = useState();
+    const [openOutputDialog, setOpenOutputDialog] = useState(false);
+    const [originalImage, setOriginalImage] = useState();
+    const [aiGeneratedImage, setAiGeneratedImage] = useState();
 
     const {user}= useUser();
 
@@ -26,7 +33,7 @@ const CreateNewForm = () => {
 
 
       const generateAiImage = async()=> {
-
+        setLoading(true)
         const rawImageUrl = await saveRawImageToFirebase()
 
         const result = await fetch('/api/redesign-room', {
@@ -40,13 +47,19 @@ const CreateNewForm = () => {
                 designType: formData?.designType,
                 additionalRequirements : formData?.additionalRequirements,
                 email: user?.primaryEmailAddress?.emailAddress
-
             })
         })
 
-        // const data = await result.json()
-        // console.log(data)
+        const data = await result.json()
+        console.log(data?.result)
+        setOutputData(data?.result)
+        setAiGeneratedImage(data?.result?.aiImage)
+        setOpenOutputDialog(true)
+        setLoading(false)
+        
       }
+
+      console.log(outputData)
 
       const saveRawImageToFirebase = async()=> {
         // lets create filename first and give reference of storage of firebase
@@ -61,13 +74,14 @@ const CreateNewForm = () => {
         const downloadUrl = await getDownloadURL(imageRef)
         // this gets the url that was uploaded to firebase storage
         console.log(downloadUrl)
+        setOriginalImage(downloadUrl)
         return downloadUrl
       }
 
 
   return (
     <div>
-         <div className='grid grid-cols-1 md:grid-cols-2 mt-10 max-w-6xl mx-auto place-items-center'>
+         <div className='grid grid-cols-1 md:grid-cols-2 mt-10 max-w-6xl mx-auto place-items-center gap-3'>
          
                 <div className='flex'>
                     <ImageSelection selectedImage={(value)=>handleInputChange(value, "image")}/>
@@ -93,6 +107,10 @@ const CreateNewForm = () => {
                         <Button onClick = {generateAiImage} className='bg-[#9D722F] cursor-pointer'>Redesign</Button>
                         <p className='text-sm text-gray-400'>Note: 1 Credit will be used to redesign your room</p>
                     </div>
+
+                    <CustomLoading loading = {loading}/>
+                    <AiOutputDialog openDialog={openOutputDialog} closeDialog={()=>(setOpenOutputDialog(false))} originalImage={originalImage} aiGeneratedImage={aiGeneratedImage}/>
+                    
                 </div>
           
        
