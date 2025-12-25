@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ImageSelection from '../ImageSelection/ImageSelection'
 import SelectRoomType from '../SelectRoomType/SelectRoomType'
 import DesignType from '../DesignType/DesignType'
@@ -10,7 +10,9 @@ import { storage } from '../../../config/firebaseConfig'
 import { useUser } from '@clerk/nextjs'
 import CustomLoading from '../../../components/custom/CustomLoading/CustomLoading'
 import AiOutputDialog from '../AiOutputDialog/AiOutputDialog'
-
+import db from '../../../config/dbConfig'
+import Users from '../../../config/schema'
+import { UserDetailsContext } from '../../../app/_context/UserDetailsContext'
 
 const CreateNewForm = () => {
 
@@ -20,8 +22,8 @@ const CreateNewForm = () => {
     const [openOutputDialog, setOpenOutputDialog] = useState(false);
     const [originalImage, setOriginalImage] = useState();
     const [aiGeneratedImage, setAiGeneratedImage] = useState();
-
     const {user}= useUser();
+   const {userDetail, setUserDetail} = useContext(UserDetailsContext);
 
     const handleInputChange = (value, fieldName)=> {
         setFormData(prev => ({
@@ -55,12 +57,14 @@ const CreateNewForm = () => {
         setOutputData(data?.result)
         setAiGeneratedImage(data?.result?.aiImage)
         setOpenOutputDialog(true)
+        updateUserCredits();
         setLoading(false)
         
       }
 
       console.log(outputData)
 
+    //   save image to firebase storage
       const saveRawImageToFirebase = async()=> {
         // lets create filename first and give reference of storage of firebase
         const fileName = Date.now()+'_raw.png'
@@ -76,6 +80,17 @@ const CreateNewForm = () => {
         console.log(downloadUrl)
         setOriginalImage(downloadUrl)
         return downloadUrl
+      }
+
+    //   update user credits after generating user image with ai
+
+      const updateUserCredits = async()=> {
+        const result = await db.update(Users).set({
+            credits: userDetail?.credits - 1
+        }).returning()
+        if (result) {
+            setUserDetail(prev=>({...prev, credits : userDetail?.credits - 1}))
+        }
       }
 
 

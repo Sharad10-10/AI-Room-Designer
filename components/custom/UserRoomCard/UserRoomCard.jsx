@@ -9,7 +9,7 @@ const UserRoomCard = ({ roomListing}) => {
   return (
    
           <div className="cursor-pointer" >
-           <div className="border-2 border-[#9D722F] rounded-lg overflow-hidden hover:scale-105 transition-all">
+           <div className="border-2 border-[#9D722F] rounded-lg overflow-hidden hover:scale-105 transition-all homeSlider">
                 <ReactBeforeSliderComponent
                 firstImage={{ imageUrl: roomListing?.aiImage }}
                 secondImage={{ imageUrl: roomListing?.originalImage }}

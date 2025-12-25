@@ -2,6 +2,7 @@
 import { useUser } from '@clerk/nextjs'
 import React, { useEffect, useState } from 'react'
 import { UserDetailsContext } from './app/_context/UserDetailsContext';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const Provider = ({children}) => {
 
@@ -47,9 +48,11 @@ const Provider = ({children}) => {
 
   return (
     <UserDetailsContext.Provider value={{userDetail, setUserDetail}}>
+      <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID  }}>
       <div>
       { children}
       </div>
+      </PayPalScriptProvider>
     </UserDetailsContext.Provider>
   )
 }

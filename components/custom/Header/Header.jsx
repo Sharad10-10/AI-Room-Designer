@@ -4,6 +4,7 @@ import { UserDetailsContext } from '../../../app/_context/UserDetailsContext'
 import { UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import React, { useContext } from 'react'
+import Link from 'next/link'
 
 const Header = () => {
     const {userDetail, setUserDetail} = useContext(UserDetailsContext)
@@ -15,9 +16,12 @@ const Header = () => {
             <h2 className='font-semibold text-lg'>AI Interior Designer</h2>
         </div>
 
-        <div className='flex gap-8 items-center'>
+        <div className='flex gap-4 items-center'>
+        <div>
+           <Link href={'/dashboard'}><Button className='rounded-lg text-[#9D722F] cursor-pointer' variant='ghost'>Home</Button></Link>
+            </div>
             <div>
-            <Button className='rounded-lg text-[#9D722F] cursor-pointer' variant='ghost'>Buy More Credits</Button>
+           <Link href={'/dashboard/buy-credits'}><Button className='rounded-lg text-[#9D722F] cursor-pointer' variant='ghost'>Buy More Credits</Button></Link>
             </div>
             <div className='flex gap-2'>
                 <div className='bg-gray-300 flex gap-1 px-4 rounded-lg'>
