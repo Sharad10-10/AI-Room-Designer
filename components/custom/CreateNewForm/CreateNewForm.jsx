@@ -13,6 +13,7 @@ import AiOutputDialog from '../AiOutputDialog/AiOutputDialog'
 import db from '../../../config/dbConfig'
 import Users from '../../../config/schema'
 import { UserDetailsContext } from '../../../app/_context/UserDetailsContext'
+import { eq } from 'drizzle-orm'
 
 const CreateNewForm = () => {
 
@@ -87,9 +88,9 @@ const CreateNewForm = () => {
       const updateUserCredits = async()=> {
         const result = await db.update(Users).set({
             credits: userDetail?.credits - 1
-        }).returning()
+        }).where(eq(Users?.email, user?.primaryEmailAddress?.emailAddress)).returning()
         if (result) {
-            setUserDetail(prev=>({...prev, credits : userDetail?.credits - 1}))
+            setUserDetail(prev =>({...prev, credits: result[0].credits}))
         }
       }
 

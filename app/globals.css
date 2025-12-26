@@ -120,6 +120,12 @@
 
 }
 
+.hero-slider .before-after-slider img{
+  height: 200px !important;
+  max-height: 200px;
+  width: 400px !important;
+}
+
 
 @layer base {
   * {

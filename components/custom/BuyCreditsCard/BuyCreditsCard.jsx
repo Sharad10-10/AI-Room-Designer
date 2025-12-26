@@ -6,6 +6,7 @@ import db from '../../../config/dbConfig'
 import Users from '../../../config/schema'
 import { UserDetailsContext } from '../../../app/_context/UserDetailsContext'
 import { useRouter } from 'next/navigation'
+import { eq } from 'drizzle-orm'
 
 const BuyCreditsCard = () => {
     const creditLists = [
@@ -42,10 +43,10 @@ const BuyCreditsCard = () => {
         // update user credits in db
         const result = await db.update(Users).set({
             credits: userDetail?.credits + selectedCredit?.totalCredits
-        }).returning()
+        }).where(eq(Users.email, userDetail?.email)).returning()
 
         if(result) {
-            setUserDetail(prev=>({...prev, credits: userDetail?.credits + selectedCredit?.totalCredits}))
+            setUserDetail(prev=>({...prev, credits: result[0].credits}))
             router.push('/dashboard')
         }
     }

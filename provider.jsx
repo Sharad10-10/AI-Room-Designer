@@ -3,12 +3,14 @@ import { useUser } from '@clerk/nextjs'
 import React, { useEffect, useState } from 'react'
 import { UserDetailsContext } from './app/_context/UserDetailsContext';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { useRouter } from 'next/navigation';
 
 const Provider = ({children}) => {
 
   const {user} = useUser();
 
   const [userDetail, setUserDetail] = useState(null);
+  const router = useRouter();
   
 
   useEffect(()=> {
@@ -34,6 +36,7 @@ const Provider = ({children}) => {
   
       setUserDetail(userInfo)
       console.log(userDetail)
+      router.push('/dashboard')
     }
 
     verifyUser()
