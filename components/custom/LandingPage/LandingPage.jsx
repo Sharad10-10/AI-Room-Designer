@@ -20,7 +20,7 @@ export default function LandingPage() {
 
       {/* Pricing */}
 
-      <div className="flex flex-col items-center justify-center text-center p-4 sm:px-6 lg:px-8 ">
+      <div id="pricing" className="flex flex-col items-center justify-center text-center p-4 sm:px-6 lg:px-8 ">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
           Simple, Transparent Pricing
         </h2>

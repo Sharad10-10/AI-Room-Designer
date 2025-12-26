@@ -5,10 +5,12 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import React, { useContext } from "react";
 import Link from "next/link";
+import HamburgerComponent from "../HamburgerComponent/HamburgerComponent";
+
 
 
 const Header = () => {
-  const { user, isLoaded, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   console.log(userDetail?.credits);
 
@@ -32,13 +34,14 @@ const Header = () => {
   }
 
   return (
-    <div className="shadow-md flex items-center justify-between px-1 sm:px-8">
+    <>
+      <div className="shadow-md flex items-center justify-between px-1 sm:px-8">
       <div className="flex items-center gap-2 ">
         <Image src="/Logo.png" alt="Logo" height={80} width={80} />
         <h2 className="font-semibold text-lg">AI Interior Designer</h2>
       </div>
 
-      <div className="flex gap-4 items-center">
+      <div className="hidden md:flex gap-4 items-center ml-auto">
         <div>
           <Link href={"/"}>
             <Button
@@ -79,11 +82,26 @@ const Header = () => {
         <UserButton />
       </div>
 
+      <HamburgerComponent />
+
+
+       
+    </div>
+
+
+      
+
+
+
+
+          
+     
+    
+       
+
+    </>
 
     
-
-
-    </div>
   );
 };
 
