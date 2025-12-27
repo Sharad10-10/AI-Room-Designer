@@ -79,7 +79,11 @@ const Header = () => {
           </div>
           <span>Credits</span>
         </div>
-        <UserButton />
+        <UserButton  appearance={{
+    elements: {
+      footer: "hidden",userButtonPopoverFooter: "hidden"
+    },
+  }}/>
       </div>
 
       <HamburgerComponent />

@@ -126,6 +126,20 @@
   width: 400px !important;
 }
 
+.cl-footer,
+.cl-footerAction,
+.cl-userButtonPopoverFooter,
+.cl-modalFooter,
+.cl-internal-b3fm6y {
+  display: none !important;
+}
+
+.cl-userProfile__root .cl-footer,
+.cl-modalContent .cl-footer,
+.cl-profileSection .cl-footer {
+  display: none !important;
+}
+
 
 @layer base {
   * {

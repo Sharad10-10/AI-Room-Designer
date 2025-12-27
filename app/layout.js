@@ -12,7 +12,11 @@ const outfit = Outfit({subsets: ["latin"]})
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{elements : {footer: "hidden",
+      footerAction: "hidden",
+      footerActionText: "hidden",
+      footerActionLink: "hidden",
+      userButtonPopoverFooter: "hidden"}}}>
       <html lang="en">
       <body className={outfit.className}>
        <Provider>
